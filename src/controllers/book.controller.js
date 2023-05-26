@@ -4,6 +4,7 @@ import * as bookService from '../services/book.service';
 export const searchBook = async (req, res, next) => {
     try {
       const data = await bookService.searchBook(req.body);
+      
       res.status(HttpStatus.OK).json({
         code: HttpStatus.OK,
         data: data,

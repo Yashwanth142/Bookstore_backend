@@ -15,11 +15,8 @@ export const getBook = async (_id) => {
 
 //get search Book
 export const searchBook = async (body) => {
-    const data = await books.find();
-    return data.filter((res)=>{
-        //console.log('data in res===> ',res.bookName.toLowerCase())
-        return res.bookName.toLowerCase().includes(body.bookName.toLowerCase())       
-      })  
-      
-    //return data;
+    const data = await books.find({bookName:new RegExp('^' + body.bookName + '$', 'i')});
+    //console.log("data-->",data)
+
+    return data;
 };

@@ -19,7 +19,7 @@ export const resetAuth = (req, res, next) => {
     const secretKey = process.env.SECRETKEY;
 
     const user = jwt.verify(bearerToken, secretKey);
-    req.body.admin_user_id = user._id;
+    req.body.userId = user._id;
 
     next();
   } catch (error) {
