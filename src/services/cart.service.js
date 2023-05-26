@@ -69,4 +69,63 @@ export const addBookToCart = async (userID, bookId) => {
     }
     return newCart;
 };
+
+//get user cart
+
+export const getCart = async (userID) => {
+  const data = await Cart.findOne({ userId: userID});
+  return data;
+};
+
+
+//remove book from cart
+
+export const removeBookFromCart = async (userID,bookId) => {
+    const book = await bookService.getBook(bookId);
+    if (!book) {
+      throw new Error('Book not found');
+    }
+    var cart = await Cart.findOne({ userId: userID });
+  
+    if (!cart) {
+      throw new Error('Book is not available in cart');
+    }
+    
+    let isBookPresent = false;
+    let i;
+    for (i = 0; i < cart.books.length; i++) {
+      if (cart.books[i].productID == bookId) {
+        isBookPresent = true;
+        break;
+      }
+    }
+    console.log('isBookPresent-->', isBookPresent);
+
+    let newCart;
+    if (isBookPresent) {
+      if ( cart.books[i].quantity == 1) {
+        newCart = Cart.updateOne(
+          { _id: cart._id },
+          {
+            $pull: {
+              books: {
+                productID: book.id
+              }
+            },
+            $inc: {
+              cartTotal: -(book.price)
+            }
+          }
+        );
+      } else {
+        const bookObj = {};
+        bookObj['books.' + i + '.quantity'] = -1;
+        bookObj['cartTotal'] = -book.price;
+        newCart = Cart.updateOne({ _id: cart._id }, { $inc: bookObj });
+      }
+    }else{
+      throw new Error('Book not found in cart');
+    }
+    return newCart;
+  };
   
