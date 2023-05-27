@@ -49,3 +49,19 @@ export const getBook = async (req, res, next) => {
         })
     }
 };
+
+export const addrating = async (req, res, next) => {
+  try {
+    const data = await bookService.addrating(req.body,req.params._id);
+    res.status(HttpStatus.OK).json({
+      code: HttpStatus.OK,
+      data: data,
+      message: 'rating added successfully'
+    });
+  } catch (error) {
+      res.status(HttpStatus.BAD_REQUEST).json({
+          code: HttpStatus.BAD_REQUEST,
+          message: `${error}`
+      })
+  }
+};

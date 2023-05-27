@@ -1,5 +1,5 @@
 import books from '../models/books.model';
-
+import User from '../models/user.model';
 
 //get all books
 export const getAllBooks = async () => {
@@ -20,3 +20,21 @@ export const searchBook = async (body) => {
 
     return data;
 };
+
+// export const addrating = async(body,bookid)=>{
+//   const user = await User.findOne({ _id: body.userId });
+  
+//   if(user)
+//   {   
+//    const data= await books.updateOne(
+//     { _id: bookid },
+//     {
+//       $addToSet: {
+//         ratingarr:{
+//           userId:body.userId
+//         }
+//       }
+//     });
+//   return data;
+// }
+// }

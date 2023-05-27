@@ -13,4 +13,6 @@ router.get('',userAuth, bookController.getAllBooks);
 //route to get a single user by their books id
 router.get('/:_id',userAuth, bookController.getBook);
 
+router.post('/rating/:_id',userAuth,bookController.addrating)
+
 export default router;
