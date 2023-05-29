@@ -61,3 +61,19 @@ export const removeBookFromCart = async (req, res, next) => {
       });
     }
 };
+
+export const purchase = async (req, res, next) => {
+  try {
+    const cart = await CartService.purchase(req.body.userId);
+      res.status(HttpStatus.OK).json({
+        code: HttpStatus.OK,
+        message: 'Cart purchased successfully'
+      });
+   
+  } catch (error) {
+    res.status(HttpStatus.BAD_REQUEST).json({
+      code: HttpStatus.BAD_REQUEST,
+      message: `${error}`
+    });
+  }
+};

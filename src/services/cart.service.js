@@ -116,7 +116,7 @@ export const removeBookFromCart = async (userID,bookId) => {
               cartTotal: -(book.price)
             }
           }
-        );
+        ); 
       } else {
         const bookObj = {};
         bookObj['books.' + i + '.quantity'] = -1;
@@ -127,5 +127,10 @@ export const removeBookFromCart = async (userID,bookId) => {
       throw new Error('Book not found in cart');
     }
     return newCart;
+  };
+  
+  export const purchase = async (userID) => {
+    const data = await Cart.updateOne({ userId: userID }, { isPurchased:true })
+    return data;
   };
   
